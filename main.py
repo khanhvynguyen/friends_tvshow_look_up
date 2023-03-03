@@ -13,7 +13,7 @@ def read_file(path: str) -> List[str]:
             "There's nothing to tell. It's just some guy I work with.", ....]
     """
     # Open the file in read mode
-    with open(path, 'r') as file:
+    with open(path, 'r', encoding="latin-1") as file:
         # Read the contents of the file
         content = file.read()
 
