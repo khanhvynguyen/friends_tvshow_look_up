@@ -31,6 +31,7 @@ def process_text(text: str):
     clean_text = text.lower()
     replacements = {
         "don't":"do not",
+        "I'd" : "I would",
         "it's":"it is",
         "'ve":"have",
         "there's":"there is",
@@ -38,7 +39,9 @@ def process_text(text: str):
         "i'm":"i am",
         "won't":"will not",
         "can't":"cannot",
-        "'s":"is"
+        "'s":" is",
+        "how's it going" : "how is it going",
+        "re": " are"
     }
     for contraction, expanded in replacements.items():
         clean_text = clean_text.replace(contraction, expanded)
@@ -93,11 +96,10 @@ def look_up_episode(query: str) -> List[str]:
 st.write(
     """
     # Friends Episode Lookup
-    Hello *world!*
     """
 )
 
-query = st.text_input("Enter the text to look up, for example 'really white'", "")
+query = st.text_input("Enter the text to look up, for example 'how're you doing?'", "")
 if query != "":
     res = look_up_episode(query)
     st.write(res)
