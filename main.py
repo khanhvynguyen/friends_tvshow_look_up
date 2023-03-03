@@ -41,7 +41,7 @@ def process_text(text: str):
         "can't":"cannot",
         "'s":" is",
         "how's it going" : "how is it going",
-        "re": " are"
+        "'re": " are"
     }
     for contraction, expanded in replacements.items():
         clean_text = clean_text.replace(contraction, expanded)
