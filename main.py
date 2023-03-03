@@ -3,7 +3,6 @@ import re
 from typing import List
 
 import streamlit as st
-import pandas as pd
 
 
 def read_file(path: str) -> List[str]:
@@ -14,17 +13,35 @@ def read_file(path: str) -> List[str]:
             "There's nothing to tell. It's just some guy I work with.", ....]
     """
     # Open the file in read mode
-    with open(path, 'r', encoding='Latin-1') as file:
+    with open(path, 'r') as file:
         # Read the contents of the file
         content = file.read()
 
     # Print the contents of the file
-    content = re.split("^\n$", content)
+    content = content.split("\n\n")  #split content into paragraphs
+    content = [x[2:] for x in content ] #remove the first number in each
+    pattern = r'(?<=[a-zA-Z,])\n'   #combine into a sentence if not been a sentence yet
+    for i in range(len(content)):
+            content[i] = re.sub(pattern, ' ', content[i])
+
     return content
 
 
 def process_text(text: str):
     clean_text = text.lower()
+    replacements = {
+        "don't":"do not",
+        "it's":"it is",
+        "'ve":"have",
+        "there's":"there is",
+        "we're":"we were",
+        "i'm":"i am",
+        "won't":"will not",
+        "can't":"cannot",
+        "'s":"is"
+    }
+    for contraction, expanded in replacements.items():
+        clean_text = clean_text.replace(contraction, expanded)
     return clean_text
 
 
@@ -86,4 +103,8 @@ if query != "":
     st.write(res)
 
 
-
+if __name__ == '__main__':
+    content = read_file("datasets/Season_1/Friends - [1x03] - The One with the Thumb.srt")
+    for x in content:
+       print(f"-------{x}++++++++++")
+    # print(content)
