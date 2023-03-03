@@ -80,7 +80,7 @@ st.write(
     """
 )
 
-query = st.text_input("Enter the text to look up", "")
+query = st.text_input("Enter the text to look up, for example 'really white'", "")
 if query != "":
     res = look_up_episode(query)
     st.write(res)
