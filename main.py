@@ -18,40 +18,46 @@ def read_file(path: str) -> List[str]:
         content = file.read()
 
     # Print the contents of the file
-    content = content.split("\n\n")  #split content into paragraphs
-    content = [x[2:] for x in content ] #remove the first number in each
-    pattern = r'(?<=[a-zA-Z,])\n'   #combine into a sentence if not been a sentence yet
+    content = content.split("\n\n")  # split content into paragraphs
+    content = [x[2:] for x in content]  # remove the first number in each
+    pattern = r'(?<=[a-zA-Z,])\n'  # combine into a sentence if not been a sentence yet
     for i in range(len(content)):
-            content[i] = re.sub(pattern, ' ', content[i])
+        content[i] = re.sub(pattern, ' ', content[i])
 
     return content
 
 
 def process_text(text: str):
     clean_text = text.lower()
+    remove_characters = [",", "?", "!", ".", "-", "_"]
     replacements = {
-        "don't":"do not",
-        "I'd" : "I would",
-        "it's":"it is",
-        "'ve":"have",
-        "there's":"there is",
-        "we're":"we were",
-        "i'm":"i am",
-        "won't":"will not",
-        "can't":"cannot",
-        "'s":" is",
-        "how's it going" : "how is it going",
-        "'re": " are"
+        "don't": "do not",
+        "I'd": "I would",
+        "it's": "it is",
+        "'ve": "have",
+        "there's": "there is",
+        "we're": "we were",
+        "i'm": "i am",
+        "won't": "will not",
+        "can't": "cannot",
+        "'s": " is",
+        "how's it going": "how is it going",
+        "'re": " are",
+        "how you doin": "how you doing",
+        "how're you doin": "how are you doing"
     }
     for contraction, expanded in replacements.items():
         clean_text = clean_text.replace(contraction, expanded)
+
+    for c in remove_characters:
+        clean_text = clean_text.replace(c, "")
     return clean_text
 
 
 def find_text_in_file(query: str, text_file: List[str]) -> bool:
     query = process_text(query)
     for text in text_file:
-        text = process_text(text)  # e.g., i don't want her to go through what i went through with carl. Oh.
+        text = process_text(text)  # e.g., i don't want her to go through what i went through with carl.
         if query in text:
             return True
     return False
@@ -93,20 +99,32 @@ def look_up_episode(query: str) -> List[str]:
     return res
 
 
-st.write(
-    """
-    # Friends Episode Lookup
-    """
-)
+def format_result(file_path_list: List[str]) -> List[str]:
+    result = []
+    for file_path in file_path_list:
+        split_file_path = file_path.split("/")
+        result.append(split_file_path)
+    return result
 
-query = st.text_input("Enter the text to look up, for example 'how're you doing?'", "")
-if query != "":
-    res = look_up_episode(query)
-    st.write(res)
+
+def run_web():
+    st.write(
+        """
+        # Friends TV Show Episode Lookup
+        """
+    )
+    st.image("img/friends_cover.jpeg", width=700)
+
+    query = st.text_input("Enter the text to look up, for example 'how're you doing?'", "")
+    if query != "":
+        res = look_up_episode(query)
+        st.write(res)
 
 
 if __name__ == '__main__':
-    content = read_file("datasets/Season_1/Friends - [1x03] - The One with the Thumb.srt")
-    for x in content:
-       print(f"-------{x}++++++++++")
-    # print(content)
+    run_web()
+
+    # list_name = ["datasets/Season_10/Friends - [10x11] - The One Where the Stripper Cries - [arsenaloyal].srt",
+    #              "datasets/Season_8/Friends - [8x19] - The One With Joey's Interview - [arsenaloyal].srt"]
+    # season_name = format_result(list_name)
+    # print(season_name)
