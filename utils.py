@@ -81,8 +81,8 @@ def get_all_file_paths(folder_path: str) -> List[str]:
         for filename in files:
             # Join the root path and filename to get the full file path
             file_path = os.path.join(root, filename)
-            if ".srt" in file_path:
-                file_path_list.append(file_path)
+            # if ".srt" in file_path:
+            file_path_list.append(file_path)
     return file_path_list
 
 if __name__ == '__main__':

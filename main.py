@@ -16,7 +16,7 @@ def look_up_episode(query: str, folder_path: str) -> List[str]:
         found_text = find_text_in_file(query, text_list)
         if found_text != "":
             cleaned_result = format_result(file_path)
-            res.append(cleaned_result + "\n" +found_text)
+            res.append(cleaned_result + ": " +found_text)
     return res
 
 
