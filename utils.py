@@ -58,8 +58,8 @@ def find_text_in_file(query: str, text_file: List[str]) -> str:
     for text in text_file:
         text = process_text(text)  # e.g., i don't want her to go through what i went through with carl.
         if query in text:
-            return text
-    return ""
+            return True
+    return False
 
 
 def get_all_file_paths(folder_path: str) -> List[str]:

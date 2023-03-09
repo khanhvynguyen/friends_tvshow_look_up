@@ -13,10 +13,10 @@ def look_up_episode(query: str, folder_path: str) -> List[str]:
     file_path_list = get_all_file_paths(folder_path)
     for file_path in file_path_list:
         text_list = read_file(file_path)  # all contents in an episode
-        found_text = find_text_in_file(query, text_list)
-        if found_text != "":
+        is_found = find_text_in_file(query, text_list)
+        if is_found:
             cleaned_result = format_result(file_path)
-            res.append(cleaned_result + ": " +found_text)
+            res.append(cleaned_result)
     return res
 
 
