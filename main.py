@@ -31,7 +31,7 @@ def format_result(result: str) -> List[str]:
     split_result = remove_right_bracket.split("/")
     split_result = split_result[2].split("-")
     season_episode = split_result[1].strip().split("x")
-    episode_title = split_result[-1].replace(".srt","").replace(".en","")
+    episode_title = split_result[-1].replace(".srt","").replace(".en","").replace(".sub","")
     final_result = f"Season {season_episode[0]}, Episode {season_episode[1]}, Title:{episode_title}"
 
     return final_result
