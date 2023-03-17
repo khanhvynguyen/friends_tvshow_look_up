@@ -144,10 +144,3 @@ def get_all_file_paths(folder_path: str) -> List[str]:
                 file_path_list.append(file_path)
     return file_path_list
 
-
-if __name__ == '__main__':
-    my_string = "'maybe it was' justreally clear that day.'"
-    new_string = re.sub(r"(^')|('$)", "", my_string)
-    print(new_string)
-
-    ## BUG: test with "really white" failed.
