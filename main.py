@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import streamlit as st
 from utils import *
 
@@ -9,18 +11,25 @@ def look_up_episode(query: str, folder_path: str) -> List[str]:
     :param folder_path:
     :return:
     """
-    res = []
+    searching_res = []
     file_path_list = get_all_file_paths(folder_path)
     for file_path in file_path_list:
         text_list = read_file(file_path)  # all contents in an episode
-        is_found = find_text_in_file(query, text_list)
-        if is_found:
-            cleaned_result = format_result(file_path)
-            res.append(cleaned_result)
+        text_found = find_text_in_file(query, text_list)
+        if text_found != "":
+            season, episode, clean_title = format_title(file_path)
+            searching_res.append((season, episode, clean_title, text_found))
+
+    searching_res = sorted(searching_res)
+    res = []
+    for x in searching_res:
+        r = {"title": x[-2],
+               "text_found": x[-1]}
+        res.append(r)
     return res
 
 
-def format_result(result: str) -> List[str]:
+def format_title(result: str) -> Tuple:
     """
 
     :param result: a file path
@@ -30,20 +39,20 @@ def format_result(result: str) -> List[str]:
     remove_right_bracket = remove_left_bracket.replace("]", "")
     split_result = remove_right_bracket.split("/")
     split_result = split_result[2].split("-")
-    season_episode = split_result[1].strip().split("x")
+    season, episode = split_result[1].strip().split("x")
     episode_title = split_result[-1].replace(".srt","").replace(".en","").replace(".sub","")
-    final_result = f"Season {season_episode[0]}, Episode {season_episode[1]}, Title:{episode_title}"
+    clean_title = f"Season {season}, Episode {episode}, Title:{episode_title}"
 
-    return final_result
+    return int(season), int(episode), clean_title
 
 
 
 def run_web(folder_path: str):
+    with open("style.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
     st.write(
-        """
-        # Friends TV Show Episode Lookup
-        """
-    )
+       "<h2>Friends TV Show - Episode Lookup </h2>", unsafe_allow_html=True)
     st.image("img/friends_cover.jpeg", width=900)
 
     query = st.text_input('Enter the text to look up, for example "how\'re you doing?"', "")
@@ -51,12 +60,16 @@ def run_web(folder_path: str):
     if query != "":
         res = look_up_episode(query, folder_path)
         for r in res:
-            st.write(r)
+            st.write(
+                     f"""<p style="font-size:26px; color: rgb(17, 134, 145);"><i>{r["title"]}</i></p>{r["text_found"]}
+                     <br> </br>
+                     """,
+                     unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
     run_web(folder_path="datasets")
 
-    res = "datasets/Season_10/Friends - [10x11] - The One Where the Stripper Cries.srt"
-    season_name = format_result(res)
-    print(season_name)
+    ## Debug
+    # look_up_episode("really white", folder_path="datasets")
+

@@ -1,18 +1,3 @@
-[INFORMATION]
-[TITLE]
-[AUTHOR]
-[SOURCE]Subtitles captured by SubRip 0.9b
-[PRG]
-[FILEPATH]
-[DELAY]0
-[CD TRACK]0
-[COMMENT]
-[END INFORMATION]
-[SUBTITLE]
-[COLF]&HFFFFFF,[STYLE]bd,[SIZE]18,[FONT]Arial
-00:00:00.00,00:00:00.10
-
-
 00:00:03.69,00:00:07.52
 So your first sexual experience[br]was with a woman?
 
