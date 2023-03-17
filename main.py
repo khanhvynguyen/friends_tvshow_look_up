@@ -47,8 +47,8 @@ def format_title(result: str) -> Tuple:
 
 
 def run_web(folder_path: str):
-    with open("style.css") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    # with open("style.css") as f:
+    #     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
     st.write(
         "<h2>Friends TV Show - Episode Lookup </h2>", unsafe_allow_html=True)
