@@ -2,7 +2,7 @@
     font-family: get show;
     font-style: normal;
     font-weight: 400;
-    src: local('Get Show'), url('fonts/Get Show.woff') format('woff')
+    src: local('Get Show'), url('custom_fonts/Get Show.woff') format('woff')
 }
 
 h2 {
