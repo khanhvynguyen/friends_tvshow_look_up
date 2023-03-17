@@ -1,4 +1,9 @@
-@import url('https://fonts.cdnfonts.com/css/get-show');
+@font-face {
+    font-family: get show;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Get Show'), url('fonts/Get Show.woff') format('woff')
+}
 
 h2 {
     font-family: 'Get Show', sans-serif;
